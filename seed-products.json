@@ -1,0 +1,182 @@
+[
+  {
+    "name": "Cyberpunk 2077: Phantom Liberty",
+    "description": "Experience the ultimate cyberpunk adventure with enhanced graphics and immersive gameplay",
+    "price": 59.99,
+    "image": "https://media.rawg.io/media/games/26d/26d4437715bee60138dab4a7c8c59c92.jpg",
+    "category": "Action RPG",
+    "is_on_deal": false,
+    "discount_percent": 0
+  },
+  {
+    "name": "Elden Ring: Shadow of the Erdtree",
+    "description": "Embark on an epic journey through the Lands Between in this critically acclaimed masterpiece",
+    "price": 49.99,
+    "image": "https://media.rawg.io/media/games/b29/b294fdd866dcdb643e7bab370a552855.jpg",
+    "category": "Action RPG",
+    "is_on_deal": true,
+    "discount_percent": 25
+  },
+  {
+    "name": "The Last of Us Part II",
+    "description": "A gripping narrative-driven survival horror experience",
+    "price": 39.99,
+    "image": "https://media.rawg.io/media/games/909/909974d1c7863c2027241e265fe7011f.jpg",
+    "category": "Survival Horror",
+    "is_on_deal": true,
+    "discount_percent": 30
+  },
+  {
+    "name": "God of War: Ragnarök",
+    "description": "Join Kratos and Atreus on their epic Norse mythology adventure",
+    "price": 69.99,
+    "image": "https://media.rawg.io/media/screenshots/3c4/3c4c51b66741363d83b56ce66b1240ec.jpg",
+    "category": "Action Adventure",
+    "is_on_deal": false,
+    "discount_percent": 0
+  },
+  {
+    "name": "Horizon Forbidden West",
+    "description": "Explore a post-apocalyptic world filled with mechanical creatures",
+    "price": 54.99,
+    "image": "https://media.rawg.io/media/games/bf7/bf73b105ccbba42107986bbcd96fcada.jpg",
+    "category": "Action RPG",
+    "is_on_deal": true,
+    "discount_percent": 20
+  },
+  {
+    "name": "Spider-Man 2",
+    "description": "Swing through New York as both Peter Parker and Miles Morales",
+    "price": 64.99,
+    "image": "https://media.rawg.io/media/games/7ae/7ae5a14cdb4ab222a134c15f4629e430.jpg",
+    "category": "Action Adventure",
+    "is_on_deal": false,
+    "discount_percent": 0
+  },
+  {
+    "name": "Baldur's Gate 3",
+    "description": "A deep RPG experience with rich storytelling and tactical combat",
+    "price": 59.99,
+    "image": "https://media.rawg.io/media/games/699/69907ecf13f172e9e144069769c3be73.jpg",
+    "category": "RPG",
+    "is_on_deal": true,
+    "discount_percent": 15
+  },
+  {
+    "name": "Starfield",
+    "description": "Explore the vast universe in Bethesda's space epic",
+    "price": 69.99,
+    "image": "https://media.rawg.io/media/games/ba8/ba82c971336adfd290e4c0eab6504fcf.jpg",
+    "category": "RPG",
+    "is_on_deal": false,
+    "discount_percent": 0
+  },
+  {
+    "name": "Resident Evil 4 Remake",
+    "description": "Survive the horror in this stunning remake of the classic",
+    "price": 44.99,
+    "image": "https://media.rawg.io/media/games/51a/51a404b9918a0b19fc704a3ca248c69f.jpg",
+    "category": "Survival Horror",
+    "is_on_deal": true,
+    "discount_percent": 25
+  },
+  {
+    "name": "Final Fantasy XVI",
+    "description": "Experience the next chapter in the legendary Final Fantasy series",
+    "price": 59.99,
+    "image": "https://media.rawg.io/media/games/22e/22e68bb62b3013283972cecf98ed51dc.jpg",
+    "category": "RPG",
+    "is_on_deal": false,
+    "discount_percent": 0
+  },
+  {
+    "name": "Red Dead Redemption 2",
+    "description": "An epic tale of outlaws and the dying days of the American frontier",
+    "price": 49.99,
+    "image": "https://media.rawg.io/media/games/511/5118aff5091cb3efec399c808f8c598f.jpg",
+    "category": "Action Adventure",
+    "is_on_deal": false,
+    "discount_percent": 0
+  },
+  {
+    "name": "Ghost of Tsushima",
+    "description": "Become the legendary samurai warrior in feudal Japan",
+    "price": 59.99,
+    "image": "https://media.rawg.io/media/games/f24/f2493ea338fe7bd3c7d73750a85a0959.jpeg",
+    "category": "Action Adventure",
+    "is_on_deal": true,
+    "discount_percent": 20
+  },
+  {
+    "name": "Hades",
+    "description": "Defy the god of the dead in this roguelike dungeon crawler",
+    "price": 24.99,
+    "image": "https://media.rawg.io/media/games/1f4/1f47a270b8f241e4676b14d39ec620f7.jpg",
+    "category": "Roguelike",
+    "is_on_deal": true,
+    "discount_percent": 40
+  },
+  {
+    "name": "Sekiro: Shadows Die Twice",
+    "description": "Master the art of the shinobi in this brutally challenging action game",
+    "price": 49.99,
+    "image": "https://media.rawg.io/media/games/67f/67f62d1f062a6164f57575e0604ee9f6.jpg",
+    "category": "Action RPG",
+    "is_on_deal": false,
+    "discount_percent": 0
+  },
+  {
+    "name": "Death Stranding",
+    "description": "Reconnect a shattered world in this genre-defying experience by Hideo Kojima",
+    "price": 39.99,
+    "image": "https://media.rawg.io/media/games/2ad/2ad87a4a69b1104f02435c14c5196095.jpg",
+    "category": "Action Adventure",
+    "is_on_deal": true,
+    "discount_percent": 35
+  },
+  {
+    "name": "The Witcher 3: Wild Hunt",
+    "description": "Hunt monsters and unravel a dark fantasy epic in this award-winning RPG",
+    "price": 29.99,
+    "image": "https://media.rawg.io/media/games/618/618c2031a07bbff6b4f611f10b6bcdbc.jpg",
+    "category": "Action RPG",
+    "is_on_deal": true,
+    "discount_percent": 50
+  },
+  {
+    "name": "DOOM Eternal",
+    "description": "Rip and tear through demonic hordes in this high-octane FPS",
+    "price": 39.99,
+    "image": "https://media.rawg.io/media/games/3ea/3ea3c9bbd940b6cb7f2139e42d3d443f.jpg",
+    "category": "FPS",
+    "is_on_deal": false,
+    "discount_percent": 0
+  },
+  {
+    "name": "Hollow Knight",
+    "description": "Explore a vast, hauntingly beautiful underground kingdom",
+    "price": 14.99,
+    "image": "https://media.rawg.io/media/games/4cf/4cfc6b7f1850590a4634b08bfab308ab.jpg",
+    "category": "Metroidvania",
+    "is_on_deal": false,
+    "discount_percent": 0
+  },
+  {
+    "name": "Uncharted 4: A Thief's End",
+    "description": "Embark on a globe-trotting treasure hunt in this cinematic action thriller",
+    "price": 39.99,
+    "image": "https://media.rawg.io/media/games/709/709bf81f874ce5d25d625b37b014cb63.jpg",
+    "category": "Action Adventure",
+    "is_on_deal": true,
+    "discount_percent": 30
+  },
+  {
+    "name": "The Legend of Zelda: Tears of the Kingdom",
+    "description": "Explore the vast lands and skies of Hyrule in this open-world masterpiece",
+    "price": 59.99,
+    "image": "https://media.rawg.io/media/games/556/55684bfd048706f4266d331d70050b37.jpg",
+    "category": "Action Adventure",
+    "is_on_deal": false,
+    "discount_percent": 0
+  }
+]
