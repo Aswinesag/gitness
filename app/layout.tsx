@@ -1,5 +1,6 @@
+import Preloader from "@/components/Preloader";
 import type { Metadata } from "next";
-import { Orbitron, Rajdhani, Inter } from "next/font/google";
+import { Inter, Orbitron, Rajdhani } from "next/font/google";
 import "./globals.css";
 import { InsforgeProvider } from "./providers";
 
@@ -37,6 +38,7 @@ export default function RootLayout({
         className={`${orbitron.variable} ${rajdhani.variable} ${inter.variable} antialiased`}
       >
         <InsforgeProvider>
+          <Preloader />
           {children}
         </InsforgeProvider>
       </body>
