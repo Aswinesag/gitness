@@ -291,11 +291,10 @@ export default function CartModal({ onClose }: CartModalProps) {
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={handleCheckout}
-                disabled={checkingOut}
-                className="w-full py-3.5 rounded-xl font-semibold text-sm tracking-wide text-white bg-gradient-to-r from-cyan-500 to-blue-600 shadow-[0_0_20px_rgba(0,200,255,0.3)] hover:shadow-[0_0_30px_rgba(0,200,255,0.5)] transition-all disabled:opacity-50"
+                onClick={() => { onClose(); router.push('/checkout'); }}
+                className="w-full py-3.5 rounded-xl font-semibold text-sm tracking-wide text-white bg-gradient-to-r from-cyan-500 to-blue-600 shadow-[0_0_20px_rgba(0,200,255,0.3)] hover:shadow-[0_0_30px_rgba(0,200,255,0.5)] transition-all"
               >
-                {checkingOut ? 'Processing...' : 'Proceed to Checkout'}
+                Proceed to Checkout
               </motion.button>
             </div>
           )}
