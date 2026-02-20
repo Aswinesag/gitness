@@ -18,19 +18,25 @@ interface Product {
 export default function AdminProductsPage() {
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
     const [deleteId, setDeleteId] = useState<string | null>(null);
     const [deleting, setDeleting] = useState(false);
     const router = useRouter();
 
     const fetchProducts = async () => {
         setLoading(true);
+        setError(null);
         try {
             const res = await fetch('/api/products');
-            if (!res.ok) throw new Error('Failed to fetch');
+            if (!res.ok) {
+                if (res.status === 401) throw new Error('Unauthorized Access. Please sign in as admin.');
+                throw new Error('Failed to fetch inventory.');
+            }
             const data = await res.json();
             setProducts(data);
-        } catch (err) {
+        } catch (err: any) {
             console.error(err);
+            setError(err.message || 'Something went wrong while fetching products.');
         } finally {
             setLoading(false);
         }
@@ -83,86 +89,111 @@ export default function AdminProductsPage() {
                 </div>
             ) : (
                 <div className="bg-white/[0.02] border border-white/5 rounded-3xl overflow-hidden backdrop-blur-sm">
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-left border-collapse">
-                            <thead>
-                                <tr className="border-b border-white/5 text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold">
-                                    <th className="px-6 py-5">Product</th>
-                                    <th className="px-6 py-5">Category</th>
-                                    <th className="px-6 py-5">Price</th>
-                                    <th className="px-6 py-5">Status</th>
-                                    <th className="px-6 py-5 text-right">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-white/5">
-                                {products.map((product) => (
-                                    <motion.tr
-                                        key={product.id}
-                                        initial={{ opacity: 0 }}
-                                        animate={{ opacity: 1 }}
-                                        className="group hover:bg-white/[0.02] transition-colors"
-                                    >
-                                        <td className="px-6 py-4">
-                                            <div className="flex items-center gap-4">
-                                                <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-900 border border-white/5">
-                                                    <img
-                                                        src={product.image || 'https://via.placeholder.com/150'}
-                                                        alt={product.name}
-                                                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                                                    />
+                    {error ? (
+                        <div className="py-20 flex flex-col items-center justify-center text-center px-4">
+                            <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mb-4">
+                                <span className="text-2xl">⚠️</span>
+                            </div>
+                            <h3 className="text-white font-bold mb-2">Fetch Error</h3>
+                            <p className="text-gray-400 text-sm max-w-xs">{error}</p>
+                            <button
+                                onClick={fetchProducts}
+                                className="mt-6 text-cyan-400 text-sm font-bold uppercase tracking-widest hover:text-cyan-300 transition-colors"
+                            >
+                                Try Again
+                            </button>
+                        </div>
+                    ) : products.length === 0 ? (
+                        <div className="py-32 flex flex-col items-center justify-center text-center px-4">
+                            <div className="w-16 h-16 bg-white/5 rounded-full flex items-center justify-center mb-4">
+                                <span className="text-2xl">📦</span>
+                            </div>
+                            <h3 className="text-white font-bold mb-2">No Products Found</h3>
+                            <p className="text-gray-400 text-sm">Start by adding your first game to the inventory.</p>
+                        </div>
+                    ) : (
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-left border-collapse">
+                                <thead>
+                                    <tr className="border-b border-white/5 text-[10px] uppercase tracking-[0.2em] text-gray-500 font-bold">
+                                        <th className="px-6 py-5">Product</th>
+                                        <th className="px-6 py-5">Category</th>
+                                        <th className="px-6 py-5">Price</th>
+                                        <th className="px-6 py-5">Status</th>
+                                        <th className="px-6 py-5 text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="divide-y divide-white/5">
+                                    {products.map((product) => (
+                                        <motion.tr
+                                            key={product.id}
+                                            initial={{ opacity: 0 }}
+                                            animate={{ opacity: 1 }}
+                                            className="group hover:bg-white/[0.02] transition-colors"
+                                        >
+                                            {/* ... row data ... */}
+                                            <td className="px-6 py-4">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-900 border border-white/5">
+                                                        <img
+                                                            src={product.image || 'https://via.placeholder.com/150'}
+                                                            alt={product.name}
+                                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                                        />
+                                                    </div>
+                                                    <div>
+                                                        <div className="font-bold text-white text-sm" style={{ fontFamily: 'var(--font-orbitron)' }}>{product.name}</div>
+                                                        <div className="text-[10px] text-gray-500 font-mono mt-1">{product.id}</div>
+                                                    </div>
                                                 </div>
-                                                <div>
-                                                    <div className="font-bold text-white text-sm" style={{ fontFamily: 'var(--font-orbitron)' }}>{product.name}</div>
-                                                    <div className="text-[10px] text-gray-500 font-mono mt-1">{product.id}</div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <span className="px-2.5 py-1 rounded-md bg-white/5 text-[10px] font-bold text-gray-400 border border-white/10 uppercase tracking-wider">
-                                                {product.category}
-                                            </span>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <div className="text-sm font-bold text-white">${product.price}</div>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            {product.is_on_deal ? (
-                                                <div className="flex items-center gap-2">
-                                                    <div className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
-                                                    <span className="text-[10px] font-bold text-amber-500 uppercase tracking-wider">On Deal ({product.discount_percent}%)</span>
-                                                </div>
-                                            ) : (
-                                                <span className="text-[10px] font-bold text-gray-600 uppercase tracking-wider">Regular</span>
-                                            )}
-                                        </td>
-                                        <td className="px-6 py-4 text-right">
-                                            <div className="flex justify-end gap-2">
-                                                <Link href={`/admin/edit/${product.id}`}>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <span className="px-2.5 py-1 rounded-md bg-white/5 text-[10px] font-bold text-gray-400 border border-white/10 uppercase tracking-wider">
+                                                    {product.category}
+                                                </span>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <div className="text-sm font-bold text-white">${product.price}</div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                {product.is_on_deal ? (
+                                                    <div className="flex items-center gap-2">
+                                                        <div className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+                                                        <span className="text-[10px] font-bold text-amber-500 uppercase tracking-wider">On Deal ({product.discount_percent}%)</span>
+                                                    </div>
+                                                ) : (
+                                                    <span className="text-[10px] font-bold text-gray-600 uppercase tracking-wider">Regular</span>
+                                                )}
+                                            </td>
+                                            <td className="px-6 py-4 text-right">
+                                                <div className="flex justify-end gap-2">
+                                                    <Link href={`/admin/edit/${product.id}`}>
+                                                        <motion.button
+                                                            whileHover={{ scale: 1.1, backgroundColor: 'rgba(255,255,255,0.1)' }}
+                                                            whileTap={{ scale: 0.9 }}
+                                                            className="p-2 rounded-lg text-gray-400 hover:text-cyan-400 transition-colors"
+                                                            title="Edit Product"
+                                                        >
+                                                            ✏️
+                                                        </motion.button>
+                                                    </Link>
                                                     <motion.button
-                                                        whileHover={{ scale: 1.1, backgroundColor: 'rgba(255,255,255,0.1)' }}
+                                                        whileHover={{ scale: 1.1, backgroundColor: 'rgba(239,68,68,0.1)' }}
                                                         whileTap={{ scale: 0.9 }}
-                                                        className="p-2 rounded-lg text-gray-400 hover:text-cyan-400 transition-colors"
-                                                        title="Edit Product"
+                                                        onClick={() => setDeleteId(product.id)}
+                                                        className="p-2 rounded-lg text-gray-400 hover:text-red-500 transition-colors"
+                                                        title="Delete Product"
                                                     >
-                                                        ✏️
+                                                        🗑️
                                                     </motion.button>
-                                                </Link>
-                                                <motion.button
-                                                    whileHover={{ scale: 1.1, backgroundColor: 'rgba(239,68,68,0.1)' }}
-                                                    whileTap={{ scale: 0.9 }}
-                                                    onClick={() => setDeleteId(product.id)}
-                                                    className="p-2 rounded-lg text-gray-400 hover:text-red-500 transition-colors"
-                                                    title="Delete Product"
-                                                >
-                                                    🗑️
-                                                </motion.button>
-                                            </div>
-                                        </td>
-                                    </motion.tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
+                                                </div>
+                                            </td>
+                                        </motion.tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
                 </div>
             )}
 
