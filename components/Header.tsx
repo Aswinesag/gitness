@@ -11,6 +11,7 @@ export default function Header() {
   const pathname = usePathname();
   const { isSignedIn, isLoaded } = useAuth();
   const { user } = useUser();
+  const isAdmin = (user as any)?.email === 'aswineye10@gmail.com';
   const [cartOpen, setCartOpen] = useState(false);
   const { cartCount, refreshCart } = useCart();
 
@@ -25,6 +26,7 @@ export default function Header() {
     { href: '/store', label: 'Store' },
     { href: '/deals', label: 'Deals' },
     { href: '/about', label: 'About' },
+    ...(isAdmin ? [{ href: '/admin', label: 'Admin' }] : []),
   ];
 
   return (
@@ -51,8 +53,8 @@ export default function Header() {
                 key={link.href}
                 href={link.href}
                 className={`relative px-3 py-2 transition-colors ${pathname === link.href
-                    ? 'text-cyan-400'
-                    : 'text-gray-300 hover:text-cyan-400'
+                  ? 'text-cyan-400'
+                  : 'text-gray-300 hover:text-cyan-400'
                   }`}
               >
                 {link.label}
