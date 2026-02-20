@@ -1,86 +1,80 @@
-# GITNESS - Futuristic Gaming Store
+# GITNESS: Futuristic Gaming Store
 
-A modern, cinematic gaming store built with Next.js 14, Tailwind CSS, Framer Motion, and InsForge backend.
+GITNESS is a high-performance, cinematic e-commerce platform for digital game distribution. Built with a focus on immersive user experience, it leverages a modern technology stack to deliver a seamless shopping journey from discovery to instant delivery.
 
-## Features
+## Key Features
 
-- 🎮 **Home Page** - Hero section with Spline 3D background
-- 🛒 **Store** - Browse all games with glowing product cards
-- 🔥 **Deals** - Limited-time deals with countdown timer
-- 📖 **About** - Mission and information page
-- 👤 **Authentication** - Sign up, sign in, and user management via InsForge
-- 🛍️ **Shopping Cart** - Add items to cart and checkout
-- 🔐 **Admin Dashboard** - Product management (admin only)
+### User Experience
+*   **Immersive Home Page**: Features high-fidelity 3D hero sections (Spline integration) and smooth scroll animations.
+*   **Interactive Preloader**: A HUD-style system initialization sequence that enhances the gaming aesthetic while assets load.
+*   **Global Layout**: Cinematic dark theme with glassmorphic elements and neon glowing gradients.
+
+### Store and Inventory
+*   **Curated Catalog**: Browse game titles across multiple genres with dynamic product cards and real-time stock availability.
+*   **Discount & Deals System**: Specialized deals section for promotional items with discount percentage displays.
+*   **Shopping Cart**: Persistent cart management allowing users to aggregate items before proceeding to payment.
+
+### Payments and Fulfillment
+*   **Stripe Integration**: Secure payment processing via Stripe Checkout, supporting global payment methods and PCI compliance.
+*   **Post-Payment Verification**: Server-side session retrieval to verify transaction status before clearing the cart.
+*   **Gamified Success Page**: Immersive "Thank You" experience featuring animated XP rewards, confetti effects, and digital order summaries.
+
+### Administration Panel
+*   **Secure Access**: Restricted to authorized administrative accounts (e.g., aswineye10@gmail.com).
+*   **Inventory CRUD**: Full capability to Create, Read, Update, and Delete products, prices, and descriptions.
+*   **Promotion Management**: Dynamic control over promotional flags and discount percentages.
+*   **Futuristic HUD Sidebar**: Specialized navigation for administrative staff.
 
 ## Tech Stack
 
-- **Frontend**: Next.js 14 (App Router), TypeScript, Tailwind CSS, Framer Motion
-- **Backend**: InsForge (PostgreSQL, Authentication, Storage)
-- **Styling**: Custom neon gradients, glowing effects, dark cinematic theme
+*   **Frontend**: Next.js 14/15 (App Router), TypeScript, React 18
+*   **Styling**: Tailwind CSS (v3), Framer Motion (Animations)
+*   **Backend**: InsForge (PostgreSQL, Real-time Database, Auth, Storage)
+*   **Payments**: Stripe SDK & Stripe Checkout
 
 ## Getting Started
 
 ### Prerequisites
-
-- Node.js 18+ and npm
-- InsForge account and backend URL
+*   Node.js 18 or higher
+*   An active InsForge project
+*   Stripe API keys (Test or Live)
 
 ### Installation
 
-1. Install dependencies:
-```bash
-cd gitness
-npm install
-```
+1.  Clone the repository and navigate to the project directory:
+    ```bash
+    cd gitness
+    ```
 
-2. Set up environment variables in `.env.local`:
-```
-NEXT_PUBLIC_INSFORGE_BASE_URL=https://975jhimv.us-west.insforge.app
-NEXT_PUBLIC_INSFORGE_ANON_KEY=your-anon-key-here
-```
+2.  Install the required dependencies:
+    ```bash
+    npm install
+    ```
 
-3. Run the development server:
-```bash
-npm run dev
-```
+3.  Configure environment variables in `.env.local`:
+    ```env
+    NEXT_PUBLIC_INSFORGE_BASE_URL=your_insforge_url
+    NEXT_PUBLIC_INSFORGE_ANON_KEY=your_insforge_key
+    STRIPE_SECRET_KEY=your_stripe_secret
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=your_stripe_public
+    ```
 
-4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+4.  Start the development server:
+    ```bash
+    npm run dev
+    ```
 
-## Database Schema
+## Project Structure
 
-The project uses the following PostgreSQL tables:
+*   `/app`: Next.js App Router pages and API routes.
+*   `/components`: Reusable UI components including HUD elements and layouts.
+*   `/lib`: Core utility functions, SDK initializations, and context providers.
+*   `/public`: Static assets and game media.
 
-- **users** - User accounts (id, name, email, password_hash, created_at)
-- **products** - Game products (id, name, description, price, image, category, is_on_deal, discount_percent, created_at)
-- **cart_items** - Shopping cart items (id, user_id, product_id, quantity, added_at)
-- **orders** - Order history (id, user_id, total_amount, status, created_at)
+## Administrative Access
 
-## Admin Access
-
-The admin dashboard is accessible at `/admin` and is restricted to:
-- Email: `aswineye10@gmail.com`
-
-Admin features:
-- View all products
-- Add new products
-- Edit existing products
-- Delete products
-- Settings page
-
-## Pages
-
-- `/` - Home page (public)
-- `/store` - Game store (requires authentication)
-- `/deals` - Deals page (requires authentication)
-- `/about` - About page (public)
-- `/admin` - Admin dashboard (admin only)
-
-## Design
-
-- **Colors**: Dark background (#0a0a0a), neon cyan/blue gradients (#00ffff → #0000ff), neon green gradients (#39ff14 → #2f4f4f)
-- **Fonts**: Orbitron/Rajdhani for headings, Inter for body text
-- **Effects**: Glowing borders, gradient text, smooth animations, hover effects
+The admin panel is located at `/admin`. Authorization is performed via email verification against established administrative credentials. Unauthorized access attempts are automatically redirected to the secure gateway.
 
 ## License
 
-MIT
+This project is licensed under the MIT License.
