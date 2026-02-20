@@ -1,8 +1,9 @@
-import Header from '@/components/Header';
+'use client';
 import Footer from '@/components/Footer';
+import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
-import Link from 'next/link';
 import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 export default function AboutPage() {
   return (
