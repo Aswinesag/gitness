@@ -2,10 +2,11 @@
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import { useCart } from '@/lib/CartContext';
+import { insforge } from '@/lib/insforge';
 import { useAuth, useUser } from '@insforge/nextjs';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { Suspense, useCallback, useEffect, useMemo, useState } from 'react';
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 const CONFETTI_COLORS = ['#00ffff', '#39ff14', '#ff6b6b', '#ffd93d', '#6c5ce7', '#a29bfe', '#fd79a8', '#00cec9'];
 
@@ -46,7 +47,10 @@ function SuccessContent() {
     const searchParams = useSearchParams();
     const { refreshCart } = useCart();
 
+    const [error, setError] = useState<string | null>(null);
     const [verified, setVerified] = useState(false);
+    const [verifying, setVerifying] = useState(true);
+    const [orderData, setOrderData] = useState<any>(null);
     const [showConfetti, setShowConfetti] = useState(true);
     const [copied, setCopied] = useState(false);
     const [xp] = useState(() => Math.floor(Math.random() * 300) + 200);
@@ -54,19 +58,62 @@ function SuccessContent() {
     const [showXpBar, setShowXpBar] = useState(false);
 
     const sessionId = searchParams.get('session_id');
-    const displayName = (user as any)?.fullName || (user as any)?.name || 'Gamer';
+    const displayName = (user as any)?.fullName || (user as any)?.name || orderData?.customer_details?.name || 'Gamer';
     const firstName = displayName.split(' ')[0];
+
+    const hasProcessed = useRef(false);
 
     useEffect(() => {
         if (isLoaded && !isSignedIn) {
             router.push('/');
             return;
         }
-        if (sessionId) {
-            refreshCart();
-            setVerified(true);
+
+        if (!sessionId || !user || hasProcessed.current) {
+            if (!sessionId && isLoaded) {
+                setVerifying(false);
+                setError('No session ID found. Please check your order details.');
+            }
+            return;
         }
-    }, [isLoaded, isSignedIn, sessionId, refreshCart, router]);
+        hasProcessed.current = true;
+
+        const processOrder = async () => {
+            setVerifying(true);
+            setError(null);
+            try {
+                // Fetch session details from our new API
+                const resp = await fetch(`/api/retrieve-session/${sessionId}`);
+                if (!resp.ok) {
+                    const errorData = await resp.json();
+                    throw new Error(errorData.error || 'Failed to verify session');
+                }
+                const data = await resp.json();
+
+                if (data.error) throw new Error(data.error);
+
+                setOrderData(data);
+
+                // Clear cart items from database
+                await insforge.database
+                    .from('cart_items')
+                    .delete()
+                    .eq('user_id', user.id);
+
+                // Refresh cart count in header
+                refreshCart();
+                setVerified(true);
+            } catch (err: any) {
+                console.error('Error processing post-payment:', err);
+                setError(err.message || 'Something went wrong while verifying your payment.');
+                setVerified(false);
+            } finally {
+                setVerifying(false);
+            }
+        };
+
+        processOrder();
+    }, [isLoaded, isSignedIn, sessionId, user, router]); // eslint-disable-line react-hooks/exhaustive-deps
 
     // Animate XP counter
     useEffect(() => {
@@ -135,11 +182,15 @@ function SuccessContent() {
             </AnimatePresence>
 
             <div className="container mx-auto px-4 py-16 max-w-2xl relative z-10">
-                {verified ? (
+                {verifying ? (
+                    <div className="flex flex-col items-center justify-center py-32 space-y-6">
+                        <div className="w-16 h-16 border-4 border-cyan-500/20 border-t-cyan-500 rounded-full animate-spin" />
+                        <p className="text-gray-400 font-medium animate-pulse">Verifying your payment...</p>
+                    </div>
+                ) : verified ? (
                     <>
-                        {/* Success badge with ring animation */}
+                        {/* ... Success badge with ring animation code ... */}
                         <div className="relative mx-auto w-32 h-32 mb-8">
-                            {/* Pulsing ring */}
                             <motion.div
                                 initial={{ scale: 0.8, opacity: 0 }}
                                 animate={{ scale: [1, 1.5, 1.3], opacity: [0.6, 0, 0] }}
@@ -221,7 +272,6 @@ function SuccessContent() {
                                         </span>
                                         <span className="text-amber-400/70 text-sm font-medium">XP</span>
                                     </div>
-                                    {/* XP progress bar */}
                                     {showXpBar && (
                                         <div className="mt-2 w-full h-1.5 rounded-full bg-white/5 overflow-hidden">
                                             <motion.div
@@ -279,10 +329,16 @@ function SuccessContent() {
                                     </div>
                                 </div>
                                 <div className="flex justify-between">
-                                    <span className="text-gray-500">Payment</span>
+                                    <span className="text-gray-500">Total Paid</span>
+                                    <span className="text-white font-bold">
+                                        ${orderData?.amount_total ? (orderData.amount_total / 100).toFixed(2) : '--.--'}
+                                    </span>
+                                </div>
+                                <div className="flex justify-between">
+                                    <span className="text-gray-500">Payment Status</span>
                                     <span className="text-emerald-400 font-medium flex items-center gap-1.5">
                                         <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                                        Paid via Stripe
+                                        {orderData?.status === 'paid' ? 'Success' : 'Pending'} via Stripe
                                     </span>
                                 </div>
                                 <div className="flex justify-between">
